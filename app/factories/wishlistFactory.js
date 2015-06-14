@@ -1,0 +1,61 @@
+(function() {
+    var wishlistFactory = function() {
+    
+        //init variables 
+        var factory = {},
+            items,
+            _initFactory,
+            _updateLocalStorage;
+
+        //this is used to set initial values
+        _initFactory = function() {
+            items = JSON.parse(localStorage.getItem('items'));
+            items = items !== null ? items : [];
+        };
+
+        //update localstorage when it changes
+        _updateLocalStorage = function() {
+            localStorage.setItem('items', JSON.stringify(items));
+        };
+        
+        //return the full array of items 
+        factory.getItems = function() {
+            return items;
+        };
+        
+        //return a specific element in the item list
+        factory.getItem = function(itemId) {
+            return items[itemId];
+        };
+        
+        //add a new item element to the list
+        factory.createItem = function(itemData) {
+            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'image': '', 'purchased': false }, itemData);
+            items.push(data);
+            _updateLocalStorage();
+        };
+        
+        //update an existing item to the list
+        factory.updateItem = function(itemId, itemData) {
+            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'image': '', 'purchased': false }, itemData);
+            items[itemId] = data;
+            _updateLocalStorage();
+        };
+        
+        //removes an element of the item list
+        factory.deleteItem = function(itemId) {
+            items.splice(itemId, 1);
+            _updateLocalStorage();
+        };
+
+        //run initializer
+        _initFactory();
+        
+        return factory;
+    };
+
+    //adding the created factory to whishlist application
+    angular.module('wishlistApp').factory('wishlistFactory', 
+                                           wishlistFactory);
+
+}());
