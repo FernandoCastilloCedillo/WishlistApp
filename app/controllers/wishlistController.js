@@ -16,7 +16,8 @@
 		                           'description': null
 		                        },
 		        'itemForm': {},
-		        'editForm': {}
+		        'editForm': {},
+		        'purchaseForm': { 'cost': 0 }
 	        };
 
 	        $scope.ui.itemForm = angular.copy($scope.ui.defaultForm);
@@ -26,9 +27,6 @@
         };
 
         $scope.events = {
-        	sort : function(sName) {
-
-        	},
         	save : function() {
         		wishlistFactory.createItem({ 'name': $scope.ui.itemForm.name, 'description': $scope.ui.itemForm.description, 'images': angular.copy($scope.images) });
 				$scope.events.updateData();
@@ -47,6 +45,17 @@
         		$scope.ui.editForm.name = itemData.name;
         		$scope.ui.editForm.description = itemData.description;
         		$scope.ui.editForm.id = index;
+        	},
+        	selectToPurchase: function(index) {
+        		$scope.ui.purchaseForm.id = index; 
+        	},
+        	purchaseElement: function(index) {
+        		var purchased =  angular.copy($scope.data.items[index]);
+        		purchased.purchased = true;
+        		purchased.cost = $scope.ui.purchaseForm.cost;
+        		console.log(purchased);
+        		wishlistFactory.purchaseItem(index, purchased);
+				$scope.events.updateData();
         	},
         	processFile: function(event) {
         		var files = event.target.files,
