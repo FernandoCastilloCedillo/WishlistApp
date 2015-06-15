@@ -76,7 +76,7 @@
 		</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="ui.editForm.$invalid" ng-click="events.save()"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="ui.editForm.$invalid" ng-click="events.update(ui.editForm.id)"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
         </div>
     </div>
   </div>
@@ -89,13 +89,13 @@
     <tr>
         <th ng-click="events.sort('name')">Name</th>
         <th ng-click="events.sort('last_modification')">Date</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:sortBy:reverse">
         <td>{{ item.name }}</td>
-        <td>{{ item.last_modification | date }}</td>
-        <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-edit"></span> </button></td>
+        <td>{{ item.last_modification | date:'medium' }}</td>
+        <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal" ng-click="events.getElement($index)"><span class="glyphicon glyphicon-edit"></span> </button></td>
         <td class="center"><button type="button" class="btn btn-danger btn-xs" ng-click="events.delete($index)"><span class="glyphicon glyphicon-remove"></span> </button></td>
     </tr>
 </table>

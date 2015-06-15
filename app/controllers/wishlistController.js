@@ -10,7 +10,6 @@
 
 	        $scope.ui = {
 	        	'itemsFilter' : {'name': '', 'purchased': false},
-	        	'isFormValid' : false,
 	        	'defaultForm': { 
 		        	               'name': null, 
 		                           'description': null
@@ -30,16 +29,23 @@
 
         	},
         	save : function() {
-        		wishlistFactory.createItem({ 'name': $scope.ui.itemForm.name, 'description': $scope.ui.itemForm.description, 'images': $scope.images });
+        		wishlistFactory.createItem({ 'name': $scope.ui.itemForm.name, 'description': $scope.ui.itemForm.description, 'images': angular.copy($scope.images) });
 				$scope.events.updateData();
         	},
-        	edit : function(index) {
-        		wishlistFactory.updateItem(index, { 'name': $scope.ui.editForm.name, 'description': $scope.ui.editForm.description, 'images': $scope.images });
+        	update : function(index) {
+        		wishlistFactory.updateItem(index, { 'name': $scope.ui.editForm.name, 'description': $scope.ui.editForm.description, 'images': angular.copy($scope.images) });
 				$scope.events.updateData();
         	},
         	delete : function(index) {
 				wishlistFactory.deleteItem(index);
 				$scope.events.updateData();
+        	},
+        	getElement: function(index) {
+        		var itemData = wishlistFactory.getItem(index);
+        		$scope.images = itemData.images;
+        		$scope.ui.editForm.name = itemData.name;
+        		$scope.ui.editForm.description = itemData.description;
+        		$scope.ui.editForm.id = index;
         	},
         	processFile: function(event) {
         		var files = event.target.files,
