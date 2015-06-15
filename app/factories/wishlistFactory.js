@@ -16,6 +16,8 @@
         //update localstorage when it changes
         _updateLocalStorage = function() {
             localStorage.setItem('items', JSON.stringify(items));
+            items = JSON.parse(localStorage.getItem('items'));
+            items = items !== null ? items : [];
         };
         
         //return the full array of items 
@@ -30,14 +32,21 @@
         
         //add a new item element to the list
         factory.createItem = function(itemData) {
-            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'image': '', 'purchased': false }, itemData);
+            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'images': [], 'purchased': false }, itemData);
             items.push(data);
             _updateLocalStorage();
         };
         
         //update an existing item to the list
         factory.updateItem = function(itemId, itemData) {
-            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'image': '', 'purchased': false }, itemData);
+            var data = angular.extend({}, { 'name': '', 'description': '', 'last_modification': Date.now(), 'images': [], 'purchased': false }, itemData);
+            items[itemId] = data;
+            _updateLocalStorage();
+        };
+        
+        //mark an existing item as purchased
+        factory.purchaseItem = function(itemId, itemData) {
+            var data = angular.extend({}, { 'last_modification': Date.now(), 'purchased': true }, itemData);
             items[itemId] = data;
             _updateLocalStorage();
         };

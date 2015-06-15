@@ -1,0 +1,10 @@
+<h1></h1>
+<br /><br /><br />
+<form name="ui.budgetForm"  novalidate>
+	<label>Max Budget:</label>
+	<input type="number" class="form-control" ng-model="ui.budgetForm.maxBudget" ng-init="events.loadBudget()" min="0"><br />
+	<span><i>0 = No limit</i></span><br><br>
+	<button class="btn btn-primary" ng-disabled="ui.budgetForm.$invalid || isNaN(ui.budgetForm.maxBudget)" ng-click="events.save()">
+	<span class="glyphicon glyphicon-ok-sign"></span> Save Changes
+	</button>
+</form>
