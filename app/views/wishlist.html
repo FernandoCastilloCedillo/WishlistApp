@@ -83,16 +83,42 @@
 </div>
 <!-- Html of modal to edit an existing item -->
 
+<!-- Html of modal to edit an existing item -->
+<div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="labelItemModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    	<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> Edit Item</h4>
+        </div>
+		<div class="modal-body">
+			<form name="ui.purchaseForm" novalidate>
+	          	<div class="form-group">
+	          		<label>Price</label>
+	          		<input type="number"  class="form-control" ng-model="ui.purchaseForm.name" required />
+
+	          	</div>
+	        </form>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="ui.purchaseForm.$invalid" ng-click="events.update(ui.purchaseForm.id)"><span class="glyphicon glyphicon-heart"></span> purchase Item</button>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- Html of modal to edit an existing item -->
+
 
 <!-- Html that show the items in a table -->
 <table class="table table-striped">
     <tr>
-        <th ng-click="events.sort('name')">Name</th>
-        <th ng-click="events.sort('last_modification')">Date</th>
+        <th>Name</th>
+        <th>Date</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
-    <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:sortBy:reverse">
+    <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:'last_modification':true">
         <td>{{ item.name }}</td>
         <td>{{ item.last_modification | date:"dd/MM/yyyy 'at' h:mma"}}</td>
         <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal" ng-click="events.getElement($index)"><span class="glyphicon glyphicon-edit"></span> </button></td>
