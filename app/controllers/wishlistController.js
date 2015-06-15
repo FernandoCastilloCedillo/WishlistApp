@@ -61,7 +61,8 @@
 					fileReader.onload = (function(theFile) {
 						return function(e) {
 							// Render thumbnail.
-							$scope.images.push({'sSrc': e.target.result, 'sFileName': theFile.name});
+							//$scope.images.push({'sSrc': e.target.result, 'sFileName': theFile.name});
+							$scope.images = [{'sSrc': e.target.result, 'sFileName': theFile.name}];
 							$scope.$apply();
 						};
 					})(f);
