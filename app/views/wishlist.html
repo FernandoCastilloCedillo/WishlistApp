@@ -33,7 +33,10 @@
 		      		<span ng-repeat="image in images" class="col-md-3">
 		      			<br />
 		      			<button type="button" class="btn btn-danger btn-xs left-block" ng-click="events.removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
-		      			<img src="{{image.sSrc}}" class="img-thumbnail" title="{{image.sFileName}}" width="156" height="118" /><br />
+		      			<a href="#/image/{{$index}}">
+		      				<img src="{{image.sSrc}}" class="img-thumbnail" title="{{image.sFileName}}" width="156" height="118" />
+		      			</a>
+		      			<br />
 		      		</span>
 		</div>
         <div class="modal-footer">
@@ -71,7 +74,10 @@
 		      		<span ng-repeat="image in images" class="col-md-3">
 		      			<br />
 		      			<button type="button" class="btn btn-danger btn-xs left-block" ng-click="events.removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
-		      			<img src="{{image.sSrc}}" class="img-thumbnail" title="{{image.sFileName}}" width="156" height="118" /><br />
+		      			<a href="#/image/{{$index}}">
+		      				<img src="{{image.sSrc}}" class="img-thumbnail" title="{{image.sFileName}}" width="156" height="118" />
+		      			</a>
+		      			<br />
 		      		</span>
 		</div>
         <div class="modal-footer">
@@ -95,7 +101,7 @@
 			<form name="ui.purchaseForm" novalidate>
 	          	<div class="form-group">
 	          		<label>Price</label>
-	          		<input type="number"  class="form-control" ng-model="ui.purchaseForm.cost" required />
+	          		<input type="number"  class="form-control" ng-model="ui.purchaseForm.cost" min="1" required />
 
 	          	</div>
 	        </form>

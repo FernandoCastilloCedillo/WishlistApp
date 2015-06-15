@@ -16,6 +16,10 @@
                 controller: 'configController',
                 templateUrl: 'app/views/configuration.html'
             })
+            .when('/image/:item_id', {
+                controller: 'wishlistController',
+                templateUrl: 'app/views/image.html'
+            })
             .otherwise( { redirectTo: '/wishlist' } );
     });
     
