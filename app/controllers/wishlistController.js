@@ -1,24 +1,26 @@
 (function() {
 
-    var WishlistController = function ($scope, wishlistFactory) {
+    var wishlistController = function ($scope, wishlistFactory) {
     	var init;
 
         init = function() {
 	        $scope.data = {
-	        				'items': []
+	        				'items': wishlistFactory.getItems()
 	        			  };
 
 	        $scope.ui = {
 	        	'itemsFilter' : {'name': '', 'purchased': false},
 	        	'isFormValid' : false,
 	        	'defaultForm': { 
-		        	               'name': '', 
-		                           'description': ''
+		        	               'name': null, 
+		                           'description': null
 		                        },
-		        'itemForm': {}
+		        'itemForm': {},
+		        'editForm': {}
 	        };
 
 	        $scope.ui.itemForm = angular.copy($scope.ui.defaultForm);
+	        $scope.ui.editForm = angular.copy($scope.ui.defaultForm);
 
 	        $scope.images = [];
         };
@@ -28,13 +30,16 @@
 
         	},
         	save : function() {
-
+        		wishlistFactory.createItem({ 'name': $scope.ui.itemForm.name, 'description': $scope.ui.itemForm.description, 'images': $scope.images });
+				$scope.events.updateData();
         	},
-        	edit : function() {
-        		
+        	edit : function(index) {
+        		wishlistFactory.updateItem(index, { 'name': $scope.ui.editForm.name, 'description': $scope.ui.editForm.description, 'images': $scope.images });
+				$scope.events.updateData();
         	},
-        	delete : function(iItemId) {
-
+        	delete : function(index) {
+				wishlistFactory.deleteItem(index);
+				$scope.events.updateData();
         	},
         	processFile: function(event) {
         		var files = event.target.files,
@@ -63,8 +68,12 @@
         		$scope.images.splice(index, 1);
         	},
         	resetForm: function() {
-        		$scope.ui.itemForm = angular.copy($scope.ui.defaultForm);
+        		$scope.ui.itemForm.name = null;
+        		$scope.ui.itemForm.description = null;
         		$scope.images = [];
+        	},
+        	updateData: function() {
+        		$scope.data.items = wishlistFactory.getItems();
         	}
         };
 
@@ -72,9 +81,9 @@
 
     };
 
-    WishlistController.$inject = ['$scope', 'wishlistFactory'];
+    wishlistController.$inject = ['$scope', 'wishlistFactory'];
 
     angular.module('wishlistApp')
-      .controller('WishlistController', WishlistController);
+    	.controller('wishlistController', wishlistController);
 
 }());

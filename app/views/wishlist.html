@@ -1,4 +1,5 @@
-<h2>{{ }}</h2>
+<br /><br />
+<h2>My wishlist items</h2>
 <br />
 <label>Filter:</label> <input type="text"  class="form-control" placeholder="search" ng-model="ui.itemsFilter.name" />
 <br /><br />
@@ -6,7 +7,7 @@
 	<span class="glyphicon glyphicon-plus"></span> Add Item
 </button>
 
-
+<!-- Html of modal to create a new item -->
 <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="labelItemModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -37,25 +38,68 @@
 		</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
-          <button type="button" class="btn btn-primary" ng-disabled="ui.itemForm.$invalid" ng-click="events.save()"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="ui.itemForm.$invalid" ng-click="events.save()"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
         </div>
     </div>
   </div>
 </div>
+<!-- Html of modal to create a new item -->
 
+<!-- Html of modal to edit an existing item -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="labelItemModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    	<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> Edit Item</h4>
+        </div>
+		<div class="modal-body">
+			<form name="ui.editForm" novalidate>
+	          	<div class="form-group">
+	          		<label>Name</label>
+	          		<input type="text"  class="form-control" ng-model="ui.editForm.name" required />
+	          		<label>Description</label>
+	          		<input type="text" class="form-control" ng-model="ui.editForm.description" required />
+		      		<label>Picture</label>
+
+	          	</div>
+	        </form>
+		      		<span class="file-input btn btn-block btn-primary btn-file">
+		                Add files&hellip; <input type="file" accept="image/x-png, image/jpeg" multiple custom-on-change="events.processFile" />
+		            </span><br />
+
+		      		<span ng-repeat="image in images" class="col-md-3">
+		      			<br />
+		      			<button type="button" class="btn btn-danger btn-xs left-block" ng-click="events.removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
+		      			<img src="{{image.sSrc}}" class="img-thumbnail" title="{{image.sFileName}}" width="156" height="118" /><br />
+		      		</span>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="ui.editForm.$invalid" ng-click="events.save()"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- Html of modal to edit an existing item -->
+
+
+<!-- Html that show the items in a table -->
 <table class="table table-striped">
     <tr>
         <th ng-click="events.sort('name')">Name</th>
-        <th ng-click="events.sort('date')">Date</th>
+        <th ng-click="events.sort('last_modification')">Date</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
     </tr>
     <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:sortBy:reverse">
         <td>{{ item.name }}</td>
-        <td>{{ item.date | date }}</td>
-        <td><span class='glyphicon glyphicon-edit'></span><a href="#/item/{{ item.id }}">Edit</a></td>
-        <td class="center"><span class="glyphicon glyphicon-remove delete" ng-click="events.delete(item.id)"></span></td>
+        <td>{{ item.last_modification | date }}</td>
+        <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-edit"></span> </button></td>
+        <td class="center"><button type="button" class="btn btn-danger btn-xs" ng-click="events.delete($index)"><span class="glyphicon glyphicon-remove"></span> </button></td>
     </tr>
 </table>
+<!-- Html that show the items in a table -->
+
 <br />
 <span>Total Items: {{ data.items.length }}</span>

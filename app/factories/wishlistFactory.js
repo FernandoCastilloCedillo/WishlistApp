@@ -22,12 +22,14 @@
         
         //return the full array of items 
         factory.getItems = function() {
-            return items;
+            _updateLocalStorage();
+            return angular.copy(items);
         };
         
         //return a specific element in the item list
         factory.getItem = function(itemId) {
-            return items[itemId];
+            _updateLocalStorage();
+            return angular.copy(items[itemId]);
         };
         
         //add a new item element to the list
