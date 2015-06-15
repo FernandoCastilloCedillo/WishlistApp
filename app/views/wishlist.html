@@ -1,0 +1,52 @@
+<h2>{{ }}</h2>
+<br />
+<label>Filter:</label> <input type="text"  class="form-control" placeholder="search" ng-model="ui.itemsFilter.name" />
+<br /><br />
+<button type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#itemModal">
+	<span class="glyphicon glyphicon-plus"></span> Add Item
+</button>
+
+
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="labelItemModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    	<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><span class="glyphicon glyphicon-plus"></span> Add Item</h4>
+        </div>
+		<div class="modal-body">
+			<form name="itemForm">
+	          	<div class="form-group">
+	          		<label>Name</label>
+	          		<input type="text"  class="form-control" ng-model="itemForm.name" />
+	          		<label>Description</label>
+	          		<input type="text"  class="form-control" ng-model="itemForm.description" />
+	          		<label>Picture</label>
+	          		<input type="file"  class="form-control" ng-model="itemForm.file" />
+	          	</div>
+	        </form>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+          <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Save Item</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th ng-click="events.sort('name')">Name</th>
+        <th ng-click="events.sort('date')">Date</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:sortBy:reverse">
+        <td>{{ item.name }}</td>
+        <td>{{ item.date | date }}</td>
+        <td><span class='glyphicon glyphicon-edit'></span><a href="#/item/{{ item.id }}">Edit</a></td>
+        <td class="center"><span class="glyphicon glyphicon-remove delete" ng-click="events.delete(item.id)"></span></td>
+    </tr>
+</table>
+<br />
+<span>Total Items: {{ data.items.length }}</span>
