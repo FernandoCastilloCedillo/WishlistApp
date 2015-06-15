@@ -1,6 +1,6 @@
 (function() {
 
-    var wishlistController = function ($scope, wishlistFactory) {
+    var wishlistController = function ($scope, $filter, wishlistFactory, configFactory) {
     	var init;
 
         init = function() {
@@ -47,15 +47,23 @@
         		$scope.ui.editForm.id = index;
         	},
         	selectToPurchase: function(index) {
+        		$scope.ui.purchaseForm.cost = 0;
         		$scope.ui.purchaseForm.id = index; 
         	},
         	purchaseElement: function(index) {
-        		var purchased =  angular.copy($scope.data.items[index]);
-        		purchased.purchased = true;
-        		purchased.cost = $scope.ui.purchaseForm.cost;
-        		console.log(purchased);
-        		wishlistFactory.purchaseItem(index, purchased);
-				$scope.events.updateData();
+        		var max = configFactory.getMaxBudget(),
+        		    amountPurchases = $filter('sumPurchasesFilter')($scope.data.items)
+        		    totalPurchases = amountPurchases + parseInt($scope.ui.purchaseForm.cost);
+
+        		if(max === 0 || totalPurchases < max) {
+	        		var purchased =  angular.copy($scope.data.items[index]);
+	        		purchased.purchased = true;
+	        		purchased.cost = $scope.ui.purchaseForm.cost;
+	        		wishlistFactory.purchaseItem(index, purchased);
+					$scope.events.updateData();
+				} else {
+					alert('You can\'t exceed your budget limit: $ ' + (max - amountPurchases) + ' available.');
+				}
         	},
         	processFile: function(event) {
         		var files = event.target.files,
@@ -98,7 +106,7 @@
 
     };
 
-    wishlistController.$inject = ['$scope', 'wishlistFactory'];
+    wishlistController.$inject = ['$scope', '$filter', 'wishlistFactory', 'configFactory'];
 
     angular.module('wishlistApp')
     	.controller('wishlistController', wishlistController);
