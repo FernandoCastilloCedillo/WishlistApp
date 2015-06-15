@@ -94,7 +94,7 @@
     </tr>
     <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:sortBy:reverse">
         <td>{{ item.name }}</td>
-        <td>{{ item.last_modification | date:'medium' }}</td>
+        <td>{{ item.last_modification | date:"dd/MM/yyyy 'at' h:mma"}}</td>
         <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal" ng-click="events.getElement($index)"><span class="glyphicon glyphicon-edit"></span> </button></td>
         <td class="center"><button type="button" class="btn btn-danger btn-xs" ng-click="events.delete($index)"><span class="glyphicon glyphicon-remove"></span> </button></td>
     </tr>
