@@ -118,7 +118,7 @@
         <th>Edit</th>
         <th>Delete</th>
     </tr>
-    <tr ng-repeat="item in data.items | filter:ui.itemsFilter | orderBy:'last_modification':true">
+    <tr ng-repeat="item in data.items |  filter:ui.itemsFilter  | orderBy:'last_modification':true">
         <td>{{ item.name }}</td>
         <td>{{ item.last_modification | date:"dd/MM/yyyy 'at' h:mma"}}</td>
         <td class="center"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal" ng-click="events.getElement($index)"><span class="glyphicon glyphicon-edit"></span> </button></td>

@@ -1,7 +1,7 @@
 <br /><br />
 <h2>My wishlist items</h2>
 <br />
-<label>Filter:</label> <input type="text"  class="form-control" placeholder="search" ng-model="ui.purchasedFilter.name" />
+<label>Filter:</label> <input type="text"  class="form-control" placeholder="search"   ng-model="ui.purchasedFilter.name" />
 <br /><br />
 
 <!-- Html that show the purchased items in a table -->
@@ -11,7 +11,7 @@
         <th>Date</th>
         <th>Delete</th>
     </tr>
-    <tr ng-repeat="item in data.items | filter:ui.purchasedFilter | orderBy:sortBy:reverse">
+    <tr ng-repeat="item in data.items |  filter:ui.purchasedFilter  | orderBy:sortBy:reverse">
         <td>{{ item.name }}</td>
         <td>{{ item.last_modification | date:"dd/MM/yyyy 'at' h:mma"}}</td>
         <td class="center"><button type="button" class="btn btn-danger btn-xs" ng-click="events.delete($index)"><span class="glyphicon glyphicon-remove"></span> </button></td>
