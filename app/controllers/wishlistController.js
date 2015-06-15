@@ -10,6 +10,7 @@
 
 	        $scope.ui = {
 	        	'itemsFilter' : {'name': '', 'purchased': false},
+	        	'purchasedFilter' : {'name': '', 'purchased': true},
 	        	'defaultForm': { 
 		        	               'name': null, 
 		                           'description': null

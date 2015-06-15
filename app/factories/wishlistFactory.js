@@ -48,7 +48,7 @@
         
         //mark an existing item as purchased
         factory.purchaseItem = function(itemId, itemData) {
-            var data = angular.extend({}, { 'last_modification': Date.now(), 'purchased': true }, itemData);
+            var data = angular.extend({}, { 'last_modification': Date.now(), 'purchased': true, 'cost': 0 }, itemData);
             items[itemId] = data;
             _updateLocalStorage();
         };
